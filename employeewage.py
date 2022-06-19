@@ -22,11 +22,16 @@ class EmployeeWage:
         """
         logging.debug("Employee wage program is running perfectly.....")
         try:
+            wage_per_hour = 20
+            daily_work_hour = 8
             rand = random.randint(0, 1)
             if rand == 0:
-                print("Employee is present")
+                daily_wage = daily_work_hour * wage_per_hour
+                print(f"Employee is present daily wage is : {daily_wage}")
+
             else:
-                print("Employee is absent")
+                print("Employee is absent ")
+
         except Exception as e:
             print(e)
             logging.exception("There is something occurs please re-check the code")
