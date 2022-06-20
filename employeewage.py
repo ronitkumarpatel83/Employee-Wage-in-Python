@@ -14,7 +14,31 @@ logging.basicConfig(filename='EmployeeWage.log', filemode='w', format=log, level
 
 
 class EmployeeWage:
-    def employee(self):
+    def __init__(self, wage_per_hour, monthly_working_day):
+        self.wage_per_hour = wage_per_hour
+        self.monthly_working_day = monthly_working_day
+
+    def check_attendance(self,rand):
+        """
+        This function is work for calculation employees wage
+        :return:
+        """
+        try:
+            if rand == 0:
+                daily_work_hour = 8
+                print("Employee is present ")
+            elif rand == 1:
+                daily_work_hour = 4
+                print("Employee is present for part-time ")
+            else:
+                daily_work_hour = 0
+                print("Employee is absent ")
+            return daily_work_hour
+        except Exception as e:
+            print(e)
+            logging.exception("There is something occurs please re-check the code")
+
+    def calculating_wage(self):
         """
         This function is work for employees attendance
         is there take attendance using random
@@ -22,22 +46,16 @@ class EmployeeWage:
         """
         logging.debug("Employee wage program is running perfectly.....")
         try:
-            wage_per_hour = 20
-            daily_work_hour = 8
-            part_time_hour = 4
-            rand = random.randint(0, 2)
-            if rand == 0:
-                print("Employee is present")
-                daily_wage = daily_work_hour * wage_per_hour
-                print(f"The total wage of a day : {daily_wage}")
-            elif rand == 1:
-                print("Employee is Part-time")
-                daily_wage = part_time_hour * wage_per_hour
-                print(f"The total wage of a day : {daily_wage}")
-            else:
-                print("Employee is absent")
-                daily_wage = daily_work_hour * 0
-                print(f"The total wage of a day : {daily_wage}")
+            total_wage = 0
+            no_of_working_days = 0
+            while no_of_working_days < self.monthly_working_day:
+                no_of_working_days += 1
+                rand = random.randint(0, 2)
+                daily_work_hour = self.check_attendance(rand)
+                daily_wage = self.wage_per_hour * daily_work_hour
+                print(f" The daily wage is : {daily_wage}")
+                total_wage += daily_wage
+            print(f"The monthly wage is : {total_wage}")
 
         except Exception as e:
             print(e)
@@ -46,8 +64,8 @@ class EmployeeWage:
 
 if __name__ == "__main__":
     try:
-        obj = EmployeeWage()
-        obj.employee()
+        obj = EmployeeWage(20, 20)
+        obj.calculating_wage()
     except Exception as e:
         print(e)
         logging.warning("Warning !!")
