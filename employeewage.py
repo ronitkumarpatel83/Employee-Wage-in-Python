@@ -71,7 +71,7 @@ class Employee:
             logging.exception("There is something occurs please re-check the code")
 
     def as_dict(self):
-        return {"Name": self.name }
+        return {"Name": self.name, "Total_wage": self.calculating_wage()}
 
 
 class Company:
@@ -81,6 +81,9 @@ class Company:
 
     def add_employee(self, employee_obj):
         self.employee_dict.update({self.name: employee_obj})
+
+    def get_employee(self, employee_name):
+        return self.employee_dict.get(employee_name)
 
     def delete_employee(self):
         self.employee_dict.clear()
@@ -103,10 +106,11 @@ if __name__ == "__main__":
 
         comp_name = input("Enter company name : ")
         comp_obj = company_dict.get(comp_name)
-        print(comp_obj.employee_dict)
+        comp_obj.view()
+
         print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
         employee_name = input("Enter employee name : ")
-        emp_obj = comp_obj.employee_dict.get(employee_name)
+        emp_obj = comp_obj.get_employee(employee_name)
         print(emp_obj.as_dict())
         print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
     except Exception as e:
