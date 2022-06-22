@@ -99,20 +99,48 @@ if __name__ == "__main__":
 
         company_dict = {comp1.name: comp1, comp2.name: comp2}
 
-        emp1 = Employee("Ronit", 20, 20, 100)
-        emp2 = Employee("Dibya", 18, 15, 80)
-        comp1.employee_dict.update({emp1.name: emp1})
-        comp1.employee_dict.update({emp2.name: emp2})
+        # emp1 = Employee("Ronit", 20, 20, 100)
+        # emp2 = Employee("Dibya", 18, 15, 80)
+        # comp1.employee_dict.update({emp1.name: emp1})
+        # comp1.employee_dict.update({emp2.name: emp2})
+        #
+        # comp_name = input("Enter company name : ")
+        # comp_obj = company_dict.get(comp_name)
+        # comp_obj.view()
+        #
+        # print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
+        # employee_name = input("Enter employee name : ")
+        # emp_obj = comp_obj.get_employee(employee_name)
+        # print(emp_obj.as_dict())
+        # print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
+        while True:
+            print(" ------------------------------------------------------------------------------ ")
+            print("1.Add Employee\n2.Update Employee\n3.Delete Employee\n4.View\n5.Exit")
+            ch = int(input("Enter choice : "))
+            if ch == 1:
+                comp_name = input("Search company name : ")
+                comp_obj = company_dict.get(comp_name)
+                name = input("Enter employee name : ")
+                emp_obj = Employee(name, 20, 20, 100)
+                comp1.employee_dict.update({emp_obj.name: emp_obj})
+                print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
+            elif ch == 2:
+                pass
+                # name = input("Enter employee name : ")
+                # emp_obj = Employee(name, 20, 20, 100)
+                # comp1.employee_dict.update({emp_obj.name: emp_obj})
+            elif ch == 3:
+                comp1.delete_employee()
+            elif ch == 4:
+                comp1.view()
+                employee_name = input("Search employee name : ")
+                obj = comp_obj.get_employee(employee_name)
+                print(obj.as_dict())
+            elif ch == 5:
+                break
+            else:
+                print("Enter valid choice")
 
-        comp_name = input("Enter company name : ")
-        comp_obj = company_dict.get(comp_name)
-        comp_obj.view()
-
-        print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
-        employee_name = input("Enter employee name : ")
-        emp_obj = comp_obj.get_employee(employee_name)
-        print(emp_obj.as_dict())
-        print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
     except Exception as e:
         print(e)
         logging.warning("Warning !!")
