@@ -12,6 +12,8 @@ print("*************************************************************************
 log = '%(lineno)d ** %(asctime)s ** %(message)s'
 logging.basicConfig(filename='EmployeeWage.log', filemode='w', format=log, level=logging.DEBUG)
 
+logging.debug("Employee Wage Program running................")
+
 
 class Employee:
     def __init__(self, name, wage_per_hour, monthly_working_day, total_working_hour):
@@ -67,8 +69,8 @@ class Employee:
             return total_wage
 
         except Exception as e:
-            print(e)
-            logging.exception("There is something occurs please re-check the code")
+            print("There is something occurs please re-check the code")
+            logging.exception(e)
 
     def as_dict(self):
         return {"Name": self.name, "Total_wage": self.calculating_wage()}
@@ -79,72 +81,97 @@ class Company:
         self.name = name
         self.employee_dict = {}
 
-    def add_employee(self, employee_obj):
-        self.employee_dict.update({self.name: employee_obj})
+    def add_employee(self, emp):
+        self.employee_dict.update({emp.name: emp})
+        return self.employee_dict
 
     def get_employee(self, employee_name):
-        return self.employee_dict.get(employee_name)
+        emp_obj = self.employee_dict.get(employee_name)
+        print(emp_obj.as_dict())
 
-    def delete_employee(self):
-        self.employee_dict.clear()
+    def delete_employee(self, emp_name):
+        self.employee_dict.pop(emp_name)
 
     def view(self):
         print(self.employee_dict)
 
 
+def add_company():
+    comp = input("Enter company name : ")
+    comp_obj = Company(comp)
+    comp_dict.update({comp_obj.name: comp_obj})
+    return comp_dict
+
+
+def display_company():
+    print(comp_dict)
+
+
+def add_employee():
+    c_name = input("Enter company name : ")
+    comp_e = comp_dict.get(c_name)
+    if comp_e is None:
+        comp_e = Company(c_name)
+        comp_dict.update({comp_e.name: comp_e})
+    name = input("Enter employee name : ")
+    emp = Employee(name, 30, 20, 120)
+    comp_e.add_employee(emp)
+
+
+def get_employee():
+    c_name = input("Enter company name : ")
+    comp_e = comp_dict.get(c_name)
+    if comp_e is None:
+        print("Company doesn't exit ")
+        return
+    employee_name = input("Enter employee name : ")
+    comp_e.get_employee(employee_name)
+
+
+def delete_employee():
+    c_name = input("Enter company name : ")
+    comp_e = comp_dict.get(c_name)
+    if comp_e is None:
+        print("Company doesn't exit ")
+        return
+    emp_name = input("Enter employee name : ")
+    comp_e.delete_employee(emp_name)
+
+
+def display_employee():
+    print("<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    c_name = input("Enter company name : ")
+    comp_e = comp_dict.get(c_name)
+    if comp_e is None:
+        print("Company doesn't exit")
+    comp_e.view()
+    print("<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+
 if __name__ == "__main__":
     try:
-        comp1 = Company("labz")
-        comp2 = Company("tcs")
-
-        company_dict = {comp1.name: comp1, comp2.name: comp2}
-
-        # emp1 = Employee("Ronit", 20, 20, 100)
-        # emp2 = Employee("Dibya", 18, 15, 80)
-        # comp1.employee_dict.update({emp1.name: emp1})
-        # comp1.employee_dict.update({emp2.name: emp2})
-        #
-        # comp_name = input("Enter company name : ")
-        # comp_obj = company_dict.get(comp_name)
-        # comp_obj.view()
-        #
-        # print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
-        # employee_name = input("Enter employee name : ")
-        # emp_obj = comp_obj.get_employee(employee_name)
-        # print(emp_obj.as_dict())
-        # print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
+        comp_dict = {}
         while True:
-            print(" ------------------------------------------------------------------------------ ")
-            print("1.Add Employee\n2.Update Employee\n3.Delete Employee\n4.View\n5.Exit")
-            ch = int(input("Enter choice : "))
-            if ch == 1:
-                comp_name = input("Search company name : ")
-                comp_obj = company_dict.get(comp_name)
-                name = input("Enter employee name : ")
-                emp_obj = Employee(name, 20, 20, 100)
-                comp1.employee_dict.update({emp_obj.name: emp_obj})
-                print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
-            elif ch == 2:
-                pass
-                # name = input("Enter employee name : ")
-                # emp_obj = Employee(name, 20, 20, 100)
-                # comp1.employee_dict.update({emp_obj.name: emp_obj})
-            elif ch == 3:
-                comp1.delete_employee()
-            elif ch == 4:
-                comp1.view()
-                employee_name = input("Search employee name : ")
-                obj = comp_obj.get_employee(employee_name)
-                print(obj.as_dict())
-            elif ch == 5:
+            print(
+                "1.add_company\n2.Display Company\n3.Add Employee \n4.Get Employee\n5.Delete Employee\n6.View\n0.Exit")
+            dict_e = {1: add_company,
+                      2: display_company,
+                      3: add_employee,
+                      4: get_employee,
+                      5: delete_employee,
+                      6: display_employee}
+
+            r = int(input("Enter a number : "))
+            if r == 0:
                 break
-            else:
-                print("Enter valid choice")
+            dict_e.get(r)()
+            input("Press enter to continue ")
+            print("--------------------- Choose Option ----------------------")
 
     except Exception as e:
         print(e)
-        logging.warning("Warning !!")
+        logging.warning(e)
     else:
-        print("      Employee Wage Calculation ! ")
+        print("      Employee Wage Calculation  ")
     finally:
         print(" <<<<<<<<<<<<<<----->>>>>>>>>>>>>>>>>>> ")
