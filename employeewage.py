@@ -88,9 +88,11 @@ class Company:
     def get_employee(self, employee_name):
         emp_obj = self.employee_dict.get(employee_name)
         print(emp_obj.as_dict())
+        return emp_obj
 
     def delete_employee(self, emp_name):
         self.employee_dict.pop(emp_name)
+        return self.employee_dict
 
     def employee_details_view(self):
         for i in self.employee_dict:
@@ -98,6 +100,7 @@ class Company:
             # print(self.employee_dict.get(i))
             emp_obj = self.employee_dict.get(i)
             print(emp_obj.as_dict())
+        return self.employee_dict
 
 
 def add_company():
@@ -118,7 +121,7 @@ def add_employee():
         comp_e = Company(c_name)
         comp_dict.update({comp_e.name: comp_e})
     name = input("Enter employee name : ")
-    emp = Employee(name, 30, 20, 120)
+    emp = Employee(name, 50, 20, 100)
     comp_e.add_employee(emp)
 
 
