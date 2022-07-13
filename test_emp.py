@@ -23,7 +23,7 @@ class TestEmployeeWage:
 
     def test_calculating_wage(self, emp):
         total = emp.calculating_wage()
-        assert total < 5500
+        assert isinstance(total, int)
 
     def test_as_dict(self, emp):
         actual = emp.as_dict()
